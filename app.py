@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from questions import quiz_data, get_categories, get_questions
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here_12345'  # Change this to a random string
+app.secret_key = 'mykey' # Needed for session management
 
 # Route 1: Home page - Select category and start quiz
 @app.route('/')
