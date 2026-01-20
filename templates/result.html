@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="--progress-value: {{ 565 * percentage / 100 }};">
+    
+    <div class="result-container">
+        <div class="result-content">
+            
+            <!-- Score Section -->
+            <div class="score-section">
+                <div class="score-circle">
+                    <svg class="circle-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#333;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="circle-bg" cx="100" cy="100" r="90"/>
+                        <circle class="circle-progress" cx="100" cy="100" r="90"/>
+                    </svg>
+                    <div class="score-content">
+                        <h1 class="score-number">{{ score }}/{{ total }}</h1>
+                        <p class="score-percentage">{{ "%.0f"|format(percentage) }}%</p>
+                    </div>
+                </div>
+                
+                <div class="result-message">
+                    {% if percentage >= 80 %}
+                        <h2 class="message-title">Excellent Work!</h2>
+                        <p class="message-text">You have mastered {{ category }}</p>
+                    {% elif percentage >= 60 %}
+                        <h2 class="message-title">Good Job!</h2>
+                        <p class="message-text">You have a solid understanding of {{ category }}</p>
+                    {% elif percentage >= 40 %}
+                        <h2 class="message-title">Not Bad!</h2>
+                        <p class="message-text">Keep practicing {{ category }}</p>
+                    {% else %}
+                        <h2 class="message-title">Keep Learning!</h2>
+                        <p class="message-text">There's room for improvement in {{ category }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Review Section -->
+            <div class="review-section">
+                <h3 class="review-title">Answer Review</h3>
+                
+                <div class="answers-list">
+                    {% for answer in user_answers %}
+                    <div class="answer-item {% if answer.is_correct %}correct{% else %}wrong{% endif %}">
+                        <div class="answer-header">
+                            <span class="question-num">Q{{ loop.index }}</span>
+                            <span class="answer-status">
+                                {% if answer.is_correct %}
+                                    <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Correct
+                                {% else %}
+                                    <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"/>
+                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                    Incorrect
+                                {% endif %}
+                            </span>
+                        </div>
+                        
+                        <p class="answer-question">{{ answer.question }}</p>
+                        
+                        <div class="answer-details">
+                            {% if not answer.is_correct %}
+                            <div class="answer-row user-answer">
+                                <span class="answer-label">Your Answer:</span>
+                                <span class="answer-value">{{ answer.user_answer }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="answer-row correct-answer">
+                                <span class="answer-label">Correct Answer:</span>
+                                <span class="answer-value">{{ answer.correct_answer }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="/" class="btn-action btn-primary">Try Another Category</a>
+                <a href="/" class="btn-action btn-secondary">Back to Home</a>
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>
