@@ -1,4 +1,3 @@
-# Each question is a dictionary with: question, options (list), and answer (correct option)
 quiz_data = {
     "Science": [
         {
@@ -227,7 +226,7 @@ quiz_data = {
 
 # Function to get all available categories
 def get_categories():
-    return list(quiz_data.keys())
+    return list(quiz_data.keys()) # ye simply categroies fetch krega hum isse use krenge jahan hame categories show krvani hongi 
 
 # Function to get questions for a specific category
 def get_questions(category):

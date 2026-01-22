@@ -14,7 +14,7 @@ A web-based quiz application built with Flask that tests your knowledge across m
 1. Clone or download this project
 2. Install dependencies:
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Running the Application
@@ -44,4 +44,3 @@ http://127.0.0.1:5000
 - Flask (Python web framework)
 - HTML5
 - CSS3
-- Jinja2 templating
